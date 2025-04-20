@@ -3,39 +3,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Model;
 use \Illuminate\Support\Arr;
 
-class Job
+class Job extends Model
 {
-    public static function all(): array
-    {
-        return [
-            [
-                'id' => 1,
-                'title' => 'Software Engineer',
-                'salary' => 100000,
-            ],
-            [
-                'id' => 2,
-                'title' => 'Data Scientist',
-                'salary' => 120000,
-            ],
-            [
-                'id' => 3,
-                'title' => 'Product Manager',
-                'salary' => 150000,
-            ],
-        ];
-    }
+    protected $table = 'job_listings'; // Specify the table name if it doesn't follow Laravel's naming convention
+    protected $fillable = ['title', 'salary']; // Specify the fillable attributes, that can be mass assigned, rest attributes will be guarded.
 
-    public static function find($id): array
-    {
-        $job = Arr::first(static::all(), fn($job) => $job['id'] == $id);
-
-        if (!$job) {
-            abort(404);
-        }
-
-        return $job;
-    }
+    //since we extended the Model class, we can use the Eloquent ORM to interact with the database. so no need to have static methods.1
 }
