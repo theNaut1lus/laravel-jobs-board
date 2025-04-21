@@ -1,64 +1,14 @@
 <?php
 
+use App\Http\Controllers\JobController;
 use Illuminate\Support\Facades\Route;
 
 
-use App\Models\Job;
-
-
-
+//base app routes
 Route::get("/", function () {
 
     return view('home');
 });
-
-
-Route::get('/jobs', function () {
-
-    //eager load the employer relations at the start of view render to get past the n+1 problem
-    $jobs = Job::with('employer')->latest()->simplePaginate(3);
-
-    return view('jobs.index', [
-        'greeting' => 'Hello',
-        'name' => 'Sid Aulakh',
-        'jobs' => $jobs,
-    ]);
-});
-
-Route::get('/jobs/create', function () {
-    return view('jobs.create');
-});
-
-//Create Job
-Route::post('/jobs', function () {
-
-    //if these fail, laravel redirects back to the source with an erros variable, which we can display.
-    request()->validate([
-        'title' => ['required', 'min:3'],
-        'salary' => ['required'],
-    ]);
-
-    Job::create([
-        'title' => request('title'),
-        'salary' => request('salary'),
-        'employer_id' => 1
-    ]);
-
-    return redirect('/jobs');
-    ;
-});
-
-//Show a job
-//used model binding to get the exact model needed by referncing the type in the action function
-Route::get('/jobs/{job}', function (Job $job) {
-    // $jobs = Job::all();
-    // $job = Job::find($id);
-
-    return view('jobs.show', [
-        'job' => $job,
-    ]);
-});
-
 Route::get('/about', function () {
     return view('about');
 });
@@ -67,44 +17,32 @@ Route::get('/contact', function () {
     return view('contact');
 });
 
+
+//job routes
+
+//show all jobs
+Route::get('/jobs', [JobController::class, 'index']);
+
+//create a job
+Route::get('/jobs/create', [JobController::class, 'create']);
+
+//Show a job
+//used model binding to get the exact model needed by referncing the type in the action function
+Route::get('/jobs/{job}', [JobController::class, 'show']);
+
 //Edit View
-Route::get('/jobs/{id}/edit', function ($id) {
-    $jobs = Job::all();
-    $job = Job::find($id);
-    return view('jobs.edit', [
-        'job' => $job,
-    ]);
-});
+Route::get('/jobs/{job}/edit', [JobController::class, 'edit']);
+
+
+//Job CRUD
+
+//store Job
+Route::post('/jobs', [JobController::class, 'store']);
+
 
 //Update Job
 //Model binding now in effect
-Route::patch('/jobs/{job}', function (Job $job) {
-    //authorize TODO
-
-    request()->validate([
-        'title' => ['required', 'min:3'],
-        'salary' => ['required'],
-    ]);
-
-
-
-    //$job = Job::findOrFail($id);
-
-    $job->update([
-        'title' => request('title'),
-        'salary' => request('salary'),
-    ]);
-
-    return redirect('/jobs/' . $job->id);
-});
+Route::patch('/jobs/{job}', [JobController::class, 'update']);
 
 //Delete Job
-Route::delete('/jobs/{job}', function (Job $job) {
-    //authorise ON-HOLD
-
-    // Job::findOrFail($id)->delete();
-
-    $job->delete();
-
-    return redirect('/jobs');
-});
+Route::delete('/jobs/{job}', [JobController::class, 'destroy']);
