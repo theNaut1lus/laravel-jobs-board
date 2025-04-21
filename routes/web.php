@@ -29,7 +29,12 @@ Route::get('/jobs/create', function () {
 });
 
 Route::post('/jobs', function () {
-    //validation
+
+    //if these fail, laravel redirects back to the source with an erros variable, which we can display.
+    request()->validate([
+        'title' => ['required', 'min:3'],
+        'salary' => ['required'],
+    ]);
 
     Job::create([
         'title' => request('title'),

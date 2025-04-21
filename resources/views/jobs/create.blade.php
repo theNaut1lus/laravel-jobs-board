@@ -21,8 +21,12 @@
                                 class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
                                 <input type="text" name="title" id="title"
                                     class="block min-w-0 grow py-1.5 pr-3 px-3 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"
-                                    placeholder="Shift Leader">
+                                    placeholder="Shift Leader" required aria-required="true">
                             </div>
+
+                            @error('title')
+                                <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
 
@@ -33,11 +37,26 @@
                                 class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
                                 <input type="text" name="salary" id="salary"
                                     class="block min-w-0 grow py-1.5 pr-3 px-3 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"
-                                    placeholder="50000">
+                                    placeholder="50000" required aria-required="true">
                             </div>
                         </div>
+
+                        @error('salary')
+                            <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
+                        @enderror
                     </div>
                 </div>
+
+                {{-- Collective error catch, we are going with specialty @error instead. --}}
+                {{-- @if ($errors->any())
+                    <div class="mt-10">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li class="text-red-500 italic">{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif --}}
             </div>
         </div>
 
