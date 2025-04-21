@@ -19,17 +19,17 @@
                         <x-form-label for="email">Email</x-form-label>
                         <div class="mt-2">
                             <x-form-input type="email" name="email" id="email" placeholder="Doe" required
-                                aria-required="true" />
+                                aria-required="true" :value="old('email')" />
                             <x-form-error name='email' />
                         </div>
                     </x-form-field>
 
                     <x-form-field>
-                        <x-form-label for="password_confirmation">Password</x-form-label>
+                        <x-form-label for="password">Password</x-form-label>
                         <div class="mt-2">
-                            <x-form-input type="password_confirmation" name="password_confirmation"
-                                id="password_confirmation" placeholder="***" required aria-required="true" />
-                            <x-form-error name='password_confirmation' />
+                            <x-form-input type="password" name="password" id="password" placeholder="***" required
+                                aria-required="true" />
+                            <x-form-error name='password' />
                         </div>
                     </x-form-field>
                 </div>

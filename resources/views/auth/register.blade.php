@@ -44,7 +44,7 @@
                     <x-form-field>
                         <x-form-label for="password">Password</x-form-label>
                         <div class="mt-2">
-                            <x-form-input type="password" name="password" id="password" placeholder="***" required
+                            <x-form-input type="password" name="password" id="password" placeholder="******" required
                                 aria-required="true" />
                             <x-form-error name='password' />
                         </div>
@@ -53,8 +53,8 @@
                     <x-form-field>
                         <x-form-label for="password_confirmation">Confirm Password</x-form-label>
                         <div class="mt-2">
-                            <x-form-input type="password_confirmation" name="password_confirmation"
-                                id="password_confirmation" placeholder="***" required aria-required="true" />
+                            <x-form-input type="password" name="password_confirmation" id="password_confirmation"
+                                placeholder="******" required aria-required="true" />
                             <x-form-error name='password_confirmation' />
                         </div>
                     </x-form-field>
