@@ -12,6 +12,7 @@ Route::get("/", function () {
     return view('home');
 });
 
+
 Route::get('/jobs', function () {
 
     //eager load the employer relations at the start of view render to get past the n+1 problem
@@ -48,9 +49,11 @@ Route::post('/jobs', function () {
 });
 
 //Show a job
-Route::get('/jobs/{id}', function ($id) {
-    $jobs = Job::all();
-    $job = Job::find($id);
+//used model binding to get the exact model needed by referncing the type in the action function
+Route::get('/jobs/{job}', function (Job $job) {
+    // $jobs = Job::all();
+    // $job = Job::find($id);
+
     return view('jobs.show', [
         'job' => $job,
     ]);
@@ -74,15 +77,19 @@ Route::get('/jobs/{id}/edit', function ($id) {
 });
 
 //Update Job
-Route::patch('/jobs/{id}', function ($id) {
+//Model binding now in effect
+Route::patch('/jobs/{job}', function (Job $job) {
+    //authorize TODO
+
     request()->validate([
         'title' => ['required', 'min:3'],
         'salary' => ['required'],
     ]);
-    //authorize TODO
 
 
-    $job = Job::findOrFail($id); //if Job not found, throw an error back to the edit page.
+
+    //$job = Job::findOrFail($id);
+
     $job->update([
         'title' => request('title'),
         'salary' => request('salary'),
@@ -92,8 +99,12 @@ Route::patch('/jobs/{id}', function ($id) {
 });
 
 //Delete Job
-Route::delete('/jobs/{id}', function ($id) {
+Route::delete('/jobs/{job}', function (Job $job) {
     //authorise ON-HOLD
-    Job::findOrFail($id)->delete();
+
+    // Job::findOrFail($id)->delete();
+
+    $job->delete();
+
     return redirect('/jobs');
 });
