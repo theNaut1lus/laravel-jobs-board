@@ -14,7 +14,9 @@ Route::get("/", function () {
 
 Route::get('/jobs', function () {
 
-    $jobs = Job::all();
+    //eager load the employer relations at the start of view render to get past the n+1 problem
+    $jobs = Job::with('employer')->simplePaginate(3);
+
     return view('jobs', [
         'greeting' => 'Hello',
         'name' => 'Sid Aulakh',

@@ -18,5 +18,13 @@
                 </div>
             </a>
         @endforeach
+
+
+    </div>
+
+    {{-- generates the page view, links for the paginator, it is ridiculously easy --}}
+    <div>
+        {{-- tailwind.blade.php under vendor views for custom changes --}}
+        {{ $jobs->links() }}
     </div>
 </x-layout>
