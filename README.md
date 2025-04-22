@@ -11,6 +11,7 @@ Technologies used:
 6: Eloquent: Laravel's ORM for connecting to the database.
 7. SQLite: File based Db using relational quieries
 8. MailTrap: Sample smtp email server and receiver for testing email functionality in app.
+9. Vite: Industrly leader Asset bundler, for compiling tailwind and chustom assets (css/js) for app to use.
 
 
 Optional:

@@ -12,7 +12,7 @@
                     {{ $job->employer->name }}
                 </div>
                 <div>
-                    <strong>
+                    <strong class="text-laracasts">
                         {{ $job['title'] }}</strong>: Pays ${{ $job['salary'] }}AUD per year.
                     </strong>
                 </div>
