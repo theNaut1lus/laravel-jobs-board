@@ -10,7 +10,7 @@ Technologies used:
 5. artisan: PHP cli tools for project management, db setup, migrations, build tools etc.
 6: Eloquent: Laravel's ORM for connecting to the database.
 7. SQLite: File based Db using relational quieries
-
+8. MailTrap: Sample smtp email server and receiver for testing email functionality in app.
 
 
 Optional:
