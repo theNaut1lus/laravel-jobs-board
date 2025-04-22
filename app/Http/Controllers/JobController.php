@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\JobPosted;
+use App\Models\Employer;
 use App\Models\Job;
 
 use App\Models\User;
@@ -63,10 +64,10 @@ class JobController extends Controller
         $job = Job::create([
             'title' => request('title'),
             'salary' => request('salary'),
-            'employer_id' => 1
+            'employer_id' => 1,
         ]);
 
-        Mail::to($job->employer->user)->send(
+        Mail::to($job->employer->user)->queue(
             new JobPosted($job)
         );
 
@@ -77,7 +78,7 @@ class JobController extends Controller
 
     public function update(Job $job)
     {
-        Gate::authorize('edit-job', $job);
+        // Gate::authorize('edit-job', $job);
 
         request()->validate([
             'title' => ['required', 'min:3'],
@@ -98,7 +99,7 @@ class JobController extends Controller
 
     public function destroy(Job $job)
     {
-        Gate::authorize('edit-job', $job);
+        //Gate::authorize('edit-job', $job);
 
         // Job::findOrFail($id)->delete();
 

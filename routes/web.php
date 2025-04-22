@@ -29,8 +29,12 @@ Route::controller(JobController::class)->group(function () {
 
     //Job CRUD
     Route::post('/jobs', 'store')->middleware('auth'); //store Job
-    Route::patch('/jobs/{job}', 'update'); //Update Job
-    Route::delete('/jobs/{job}', 'destroy'); //Delete Job
+    Route::patch('/jobs/{job}', 'update')
+        ->middleware('auth')
+        ->can('edit', 'job'); //Update Job
+    Route::delete('/jobs/{job}', 'destroy')
+        ->middleware('auth')
+        ->can('edit', 'job'); //Delete Job
 });
 
 //Auth
